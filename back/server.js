@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.use('/api/users', userRoutes);
 
@@ -53,5 +53,17 @@ app.get('/search-recipe', async (req, res) => {
       res.send(completion.choices);
   } catch (error) {
     res.status(500).send({ message: error });
+  }
+});
+
+app.get('/chat-bot', async (req, res) => {
+  try {
+      const completion = await openai.chat.completions.create({
+          messages: [{ role: "user", content: req.query.question }],
+          model: "gpt-3.5-turbo",
+      });
+      res.send(completion.choices);
+  } catch (error) {
+      res.status(500).send({ message: error });
   }
 });
