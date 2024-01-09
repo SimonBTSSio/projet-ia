@@ -24,10 +24,22 @@ app.get('/api', async (req, res) => {
   res.json({"foo": req.query.test})
 });
 
+app.get('/get-recipe', async (req, res) => {
+  try {
+      const completion = await openai.chat.completions.create({
+          messages: [{ role: "user", content: "Tu es sur un site de cuisine, tu dois me donner une recette avec les informations suivantes et tu dois me retourner les informations au format json les champs jsons doivents être (titre, difficulte, temps, ingredients, etapes). Informations à retourner : le nom de la recette, le temps de préparation, le niveau de difficulté, les ingrédients, et chaque étapes de la recettes. Informations recette : titre = " + req.query.titre + " / difficulté = " + req.query.difficulte + " / temps = " + req.query.temps}],
+          model: "gpt-3.5-turbo",
+      });
+      res.send(completion.choices);
+  } catch (error) {
+    res.status(500).send({ message: error });
+  }
+});
+
 app.get('/search-recipe', async (req, res) => {
   try {
       const completion = await openai.chat.completions.create({
-          messages: [{ role: "user", content: "Tu es un moteur de recherche intelligent, en te basant sur la recherches suivantes je veux que tu retourne plusieurs recettes, t'as réponse doit être au format json, chaque recette poséde un titre, le niveau de difficulté (facile, moyen ou dur), le temps moyen pour réaliser la recette et enfin une petite description de la recette. recherche utilisateurs : " + req.query.question }],
+          messages: [{ role: "user", content: "Tu es un moteur de recherche intelligent, en te basant sur la recherches suivantes je veux que tu retourne plusieurs recettes, t'as réponse doit être au format json , chaque recette poséde un titre (nom champ json : titre), le niveau de difficulté (facile, moyen ou dur)(nom champ json : difficulte), le temps moyen pour réaliser la recette (nom champ json : temps) et enfin une petite description de la recette (nom champ json : description). recherche utilisateurs : " + req.query.question }],
           model: "gpt-3.5-turbo",
       });
       res.send(completion.choices);
