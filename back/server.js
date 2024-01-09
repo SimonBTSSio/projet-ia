@@ -2,12 +2,20 @@ const express = require('express');
 const dotenv = require('dotenv');
 const OpenAI = require('openai');
 const cors = require('cors');
+const userRoutes = require('./routes/user.routes');
+const bodyParser = require("body-parser");
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
-const port = process.env.PORT || 3000;
+app.use(express.json());
+app.use(bodyParser.json());
+
+const port = process.env.PORT || 3001;
+
+app.use('/api/users', userRoutes);
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
