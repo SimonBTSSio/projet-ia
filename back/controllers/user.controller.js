@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const RecipeUser = require('../models/recipeuser.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -148,6 +149,25 @@ function logoutUser(req, res) {
   }
 }
 
+const likeRecipe = async (req, res) => {
+  try {
+    const { recette_id, author } = req.body;
+
+    const [recipeUser, created] = await RecipeUser.findOrCreate({
+      where: { recette_id, author },
+      defaults: { recette_id, author },
+    });
+
+    if (created) {
+      res.status(201).json({ message: 'Recette likée avec succès.', recipeUser });
+    } else {
+      res.status(200).json({ message: 'Vous avez déjà liké cette recette.', recipeUser });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createUser,
   getAllUsers,
@@ -157,4 +177,5 @@ module.exports = {
   registerUser,
   loginUser,
   logoutUser,
+  likeRecipe
 };

@@ -10,5 +10,6 @@ router.delete('/:id', UserController.deleteUser);
 router.post('/register', UserController.registerUser);
 router.post('/login', UserController.loginUser);
 router.post('/logout', UserController.logoutUser);
+router.post('/like', UserController.likeRecipe);
 
 module.exports = router;
