@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.use('/api/users', userRoutes);
 app.use('/api/comments', commentRoutes);
@@ -48,6 +48,18 @@ app.get('/get-recipe', async (req, res) => {
   }
 });
 
+app.get('/get-similar-recipe', async (req, res) => {
+  try {
+      const completion = await openai.chat.completions.create({
+          messages: [{ role: "user", content: "Tu dois me proposer plusieurs recettes similaire à celle ci en me donnant le titre, la description et le temps de réalisation, tu dois me faire une réponse au format json, les champs json de chaque recettes devront être (titre, description, temps). Recette : " + req.query.recipe}],
+          model: "gpt-3.5-turbo",
+      });
+      res.send(completion.choices);
+  } catch (error) {
+    res.status(500).send({ message: error });
+  }
+});
+
 app.get('/search-recipe', async (req, res) => {
   try {
       const completion = await openai.chat.completions.create({
@@ -57,5 +69,17 @@ app.get('/search-recipe', async (req, res) => {
       res.send(completion.choices);
   } catch (error) {
     res.status(500).send({ message: error });
+  }
+});
+
+app.get('/chat-bot', async (req, res) => {
+  try {
+      const completion = await openai.chat.completions.create({
+          messages: [{ role: "user", content: req.query.question }],
+          model: "gpt-3.5-turbo",
+      });
+      res.send(completion.choices);
+  } catch (error) {
+      res.status(500).send({ message: error });
   }
 });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom';
+import SimilarRecipes from '../components/SimilarRecipes'; 
 import '../style.css';
 
 export default function Recipe() {
@@ -16,7 +17,6 @@ export default function Recipe() {
       try {
         const response = await fetch(`http://195.35.29.110:3000/get-recipe?titre=${titre}&difficulte=${difficulte}&temps=${temps}`);
         const data = await response.json();
-        // Supposant que la réponse est toujours un tableau avec au moins un élément
         const recipeData = JSON.parse(data[0].message.content); 
         setRecipeDetails(recipeData);
       } catch (error) {
@@ -40,6 +40,7 @@ export default function Recipe() {
         ) : (
           <p>Chargement de la recette...</p>
         )}
+        {recipeDetails && <SimilarRecipes recipeTitle={recipeDetails.titre} />}
     </div>
   );
 }

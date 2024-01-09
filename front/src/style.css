@@ -59,4 +59,19 @@ button:disabled {
 .recipe-details p {
     margin: 10px 0;
 }
+
+.similar-recipes {
+    margin-top: 20px;
+}
+
+.similar-recipe-link {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.similar-recipe-link:hover {
+    color: blue;
+}
   
