@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const OpenAI = require('openai');
 const cors = require('cors');
 const userRoutes = require('./routes/user.routes');
+const commentRoutes = require('./routes/comment.routes');
+const recipeRoutes = require('./routes/recipe.routes');
 const bodyParser = require("body-parser");
 
 dotenv.config();
@@ -15,6 +17,8 @@ app.use(bodyParser.json());
 const port = process.env.PORT || 3001;
 
 app.use('/api/users', userRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/recipes', recipeRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
