@@ -32,10 +32,6 @@ app.get('/ping', async (req, res) => {
     res.json({"res": "pong"})
 });
 
-app.get('/api', async (req, res) => {
-  res.json({"foo": req.query.test})
-});
-
 app.get('/get-recipe', async (req, res) => {
   try {
       const completion = await openai.chat.completions.create({
@@ -76,6 +72,18 @@ app.get('/chat-bot', async (req, res) => {
   try {
       const completion = await openai.chat.completions.create({
           messages: [{ role: "user", content: req.query.question }],
+          model: "gpt-3.5-turbo",
+      });
+      res.send(completion.choices);
+  } catch (error) {
+      res.status(500).send({ message: error });
+  }
+});
+
+app.get('/accompaniement', async (req, res) => {
+  try {
+      const completion = await openai.chat.completions.create({
+          messages: [{ role: "user", content: "Tu dois me proposer des accompagnements qui conviendrait bien pour la recette suivante. Par exemple un vin, un dessert ou des fromages. Tu dois me retourner ton message au format json, chaque accompagnement doit avoir le champ nom. recette en question : " + req.query.recipe }],
           model: "gpt-3.5-turbo",
       });
       res.send(completion.choices);

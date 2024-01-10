@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import SimilarRecipes from '../components/SimilarRecipes'; 
+import SimilarRecipes from '../components/SimilarRecipes';
+import AccompanimentSuggester from '../components/AccompanimentSuggester';
 import '../style.css';
 
 export default function Recipe() {
@@ -41,6 +42,7 @@ export default function Recipe() {
           <p>Chargement de la recette...</p>
         )}
         {recipeDetails && <SimilarRecipes recipeTitle={recipeDetails.titre} />}
+        {recipeDetails && <AccompanimentSuggester recipeTitle={recipeDetails.titre} />}
     </div>
   );
 }
