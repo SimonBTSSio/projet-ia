@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Recipe', {
+    await queryInterface.createTable('Recipes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,10 +19,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       ingredients: {
-        type: Sequelize.TEXT
+        type: Sequelize.JSON
       },
       instructions: {
-        type: Sequelize.TEXT
+        type: Sequelize.JSON
       },
       createdAt: {
         allowNull: false,
