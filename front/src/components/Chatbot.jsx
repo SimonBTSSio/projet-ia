@@ -6,7 +6,7 @@ export default function Chatbot() {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const promptInitial = "Mets toi dans la peau d'un chef étoilé au guide Michelin ayant une quinzaine d'années d'expérience dans le métier avec plusieurs concours culinaires gagnés à l'international et réponds à la demande suivante : ";
+    const promptInitial = "Mets toi dans la peau d'un chef étoilé au guide Michelin ayant une quinzaine d'années d'expérience dans le métier avec plusieurs concours culinaires gagnés à l'international et tu dois répondre à la derniere question poser par l'utilisateur, car ceci est un conversation chat bot, historique conversation : ";
 
     useEffect(() => {
         const initialMessage = {
@@ -58,7 +58,7 @@ export default function Chatbot() {
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                             placeholder="Votre question..."
-                            disabled={isLoading} // Désactiver pendant le chargement
+                            disabled={isLoading}
                         />
                         <button onClick={handleSend} disabled={isLoading}>Envoyer</button>
                     </div>
