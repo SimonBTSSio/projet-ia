@@ -3,9 +3,13 @@ import { useLocation } from 'react-router-dom';
 import SimilarRecipes from '../components/SimilarRecipes';
 import AccompanimentSuggester from '../components/AccompanimentSuggester';
 import '../style.css';
+import RecipeEvaluation from "../components/comment/RecipeEvaluation.jsx";
+import CommentList from "../components/comment/CommentList.jsx";
+import TabMenu from "../components/recipe/TabMenu.jsx";
 
 export default function Recipe() {
   const [recipeDetails, setRecipeDetails] = useState(null);
+  const [comments, setComments] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -18,7 +22,7 @@ export default function Recipe() {
       try {
         const response = await fetch(`http://195.35.29.110:3000/get-recipe?titre=${titre}&difficulte=${difficulte}&temps=${temps}`);
         const data = await response.json();
-        const recipeData = JSON.parse(data[0].message.content); 
+        const recipeData = JSON.parse(data[0].message.content);
         setRecipeDetails(recipeData);
       } catch (error) {
         console.error("Erreur lors de la récupération de la recette:", error);
@@ -27,6 +31,36 @@ export default function Recipe() {
 
     fetchRecipe();
   }, [location]);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/recipes/name/${recipeDetails.titre}`);
+        const data = await response.json();
+        if (data.recipe.id) {
+          const commentResponse = await fetch(`http://localhost:3001/api/comments/${data.recipe.id}`);
+            const commentData = await commentResponse.json();
+
+            setComments(commentData.comments)
+        } else {
+          console.log("pas de commentaires");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération de la recette:", error);
+      }
+    }
+    fetchComments();
+
+  }, [recipeDetails]);
+
+  console.log(comments)
+  const tabsData = [
+    { label: 'Recettes similaires', content: <SimilarRecipes recipeTitle={recipeDetails?.titre} /> },
+    { label: 'Commentaires', content:<CommentList comments={comments}/>
+    }
+  ];
+
+  console.log(comments)
 
   return (
     <div className="recipe-details">
@@ -37,11 +71,12 @@ export default function Recipe() {
             <p>Temps : {recipeDetails.temps}</p>
             <p>Ingrédients : {recipeDetails.ingredients.join(', ')}</p>
             <p>Étapes : {recipeDetails.etapes.join(', ')}</p>
+            <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
           </div>
         ) : (
           <p>Chargement de la recette...</p>
         )}
-        {recipeDetails && <SimilarRecipes recipeTitle={recipeDetails.titre} />}
+        {recipeDetails && <TabMenu tabsData={tabsData} />}
         {recipeDetails && <AccompanimentSuggester recipeTitle={recipeDetails.titre} />}
     </div>
   );

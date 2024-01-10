@@ -5,5 +5,6 @@ const CommentController = require('../controllers/comment.controller');
 router.post('/', CommentController.createComment);
 router.get('/:recette_id', CommentController.getRecipeComments);
 router.get('/user/:author', CommentController.getUserComments);
+router.delete('/:id', CommentController.deleteComment);
 
 module.exports = router;

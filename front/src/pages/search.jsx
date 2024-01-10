@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../style.css';
 
 export default function SearchPage() {
@@ -21,7 +21,7 @@ export default function SearchPage() {
   };
 
   return (
-    <div>
+    <div className="search">
         <form onSubmit={handleSearch}>
             <input
                 type="text"

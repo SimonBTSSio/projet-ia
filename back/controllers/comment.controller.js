@@ -4,13 +4,32 @@ const createComment = async (req, res) => {
   try {
     const { comment, rating, recette_id, author } = req.body;
 
-    const newComment = await Comment.create({ comment, rating, recette_id, author });
+    // Vérifier si un commentaire existe déjà pour cette recette et cet auteur
+    let existingComment = await Comment.findOne({
+      where: {
+        recette_id: recette_id,
+        author: author,
+      },
+    });
 
-    res.status(201).json({ message: 'Commentaire créé avec succès.', comment: newComment });
+    if (existingComment) {
+      // Si un commentaire existe déjà, mettez à jour le commentaire existant
+      existingComment.comment = comment;
+      existingComment.rating = rating;
+
+      await existingComment.save();
+
+      res.status(200).json({ message: 'Commentaire mis à jour avec succès.', comment: existingComment });
+    } else {
+      // S'il n'y a pas de commentaire existant, créez un nouveau commentaire
+      const newComment = await Comment.create({ comment, rating, recette_id, author });
+      res.status(201).json({ message: 'Commentaire créé avec succès.', comment: newComment });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 const getRecipeComments = async (req, res) => {
   try {

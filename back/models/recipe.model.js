@@ -18,10 +18,10 @@ const Recipe = sequelize.define('Recipe', {
         type: DataTypes.STRING,
     },
     ingredients: {
-        type: DataTypes.STRING(1000),
+        type: DataTypes.JSON,
     },
     instructions: {
-        type: DataTypes.STRING(1000),
+        type: DataTypes.JSON,
     }
 }, {
     tableName: 'Recipe',

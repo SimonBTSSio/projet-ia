@@ -1,10 +1,3 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -39,4 +32,90 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.home {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9; /* Couleur d'arrière-plan de la page */
+  min-height: 100vh; /* Hauteur minimale de la page pour s'adapter à la taille de l'écran */
+}
+
+/* Styles pour la classe home-container */
+.home-container {
+  max-width: 800px; /* Largeur maximale du contenu */
+  margin: 0 auto; /* Centrage horizontale du contenu */
+  text-align: center; /* Centrage du texte */
+  padding: 50px 20px; /* Espacement intérieur du contenu */
+}
+
+/* Style pour le titre h1 */
+.home-container h1 {
+  font-size: 2.5em; /* Taille de la police du titre */
+  color: #333; /* Couleur du texte */
+  margin-bottom: 20px; /* Marge en bas du titre */
+}
+
+/* Styles pour le container des boutons */
+.buttons-container {
+  display: flex; /* Affichage en ligne des boutons */
+  justify-content: center; /* Centrage horizontal des boutons */
+}
+
+/* Styles pour le composant CommentItem */
+
+.comment-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.comment-item p {
+  margin: 8px 0;
+}
+
+.comment-item p strong {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+/* Optionnel : Style spécifique pour la note (rating) */
+.comment-item p.rating {
+  color: #007bff; /* Couleur pour la note, ajustez selon votre préférence */
+  font-size: 1.2em;
+}
+
+/* Styles pour les boutons Supprimer et Modifier */
+.comment-item {
+  /* ... (votre style existant pour le conteneur CommentItem) */
+}
+
+.comment-item div {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment-item button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.comment-item button:hover {
+  background-color: #f5f5f5; /* Couleur de fond au survol */
+  /* Autres styles au survol si nécessaire */
+}
+
+.comment-item button:nth-child(1) {
+  background-color: #dc3545; /* Couleur du bouton Supprimer */
+  color: white; /* Couleur du texte */
+}
+
+.comment-item button:nth-child(2) {
+  background-color: #007bff; /* Couleur du bouton Modifier */
+  color: white; /* Couleur du texte */
 }
