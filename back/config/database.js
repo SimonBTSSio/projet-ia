@@ -1,13 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize({
-  database: 'app',
-  username: 'root',
-  password: 'password',
-  host: 'localhost',
-  port: 5432,
-  dialect: 'postgres',
-});
+const sequelize = new Sequelize(process.env.DATABASE_URL);
 
 try {
   sequelize.authenticate();

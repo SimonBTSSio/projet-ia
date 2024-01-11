@@ -4,7 +4,6 @@ const createRecipe = async (req, res) => {
   const { name, difficulty, duration, ingredients, instructions } = req.body;
 
   try {
-    // Vérifier si une recette avec le même nom existe déjà
     const existingRecipe = await Recipe.findOne({
       where: {
         name: name,
@@ -12,11 +11,9 @@ const createRecipe = async (req, res) => {
     });
 
     if (existingRecipe) {
-      // Si une recette avec le même nom existe déjà, renvoyer un message d'erreur
       return res.status(200).json({ error: 'Recette trouvé', recipe: existingRecipe });
     }
 
-    // Si aucune recette avec le même nom n'existe, créer la nouvelle recette
     const newRecipe = await Recipe.create({
       name: name,
       difficulty: difficulty,
