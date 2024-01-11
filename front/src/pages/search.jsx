@@ -12,8 +12,8 @@ export default function SearchPage() {
     try {
       const response = await fetch(`http://195.35.29.110:3000/search-recipe?question=${encodeURIComponent(query)}`);
       const data = await response.json();
-      const recipesData = data.map(item => JSON.parse(item.message.content).recettes).flat();
-      setRecipes(recipesData);
+      const recipesData = Object.values(data);
+      setRecipes(recipesData[0]);
     } catch (error) {
       console.error("Erreur lors de la récupération des recettes:", error);
     }

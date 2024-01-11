@@ -35,10 +35,10 @@ export default function Recipe() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/recipes/name/${recipeDetails.titre}`);
+        const response = await fetch(`http://195.35.29.110:3000/api/recipes/name/${recipeDetails.titre}`);
         const data = await response.json();
         if (data.recipe.id) {
-          const commentResponse = await fetch(`http://localhost:3001/api/comments/${data.recipe.id}`);
+          const commentResponse = await fetch(`http://195.35.29.110:3000/api/comments/${data.recipe.id}`);
             const commentData = await commentResponse.json();
 
             setComments(commentData.comments)
@@ -69,8 +69,8 @@ export default function Recipe() {
             <h2>{recipeDetails.titre}</h2>
             <p>Difficulté : {recipeDetails.difficulte}</p>
             <p>Temps : {recipeDetails.temps}</p>
-            <p>Ingrédients : {recipeDetails.ingredients.join(', ')}</p>
-            <p>Étapes : {recipeDetails.etapes.join(', ')}</p>
+            <p>Ingrédients : {recipeDetails.ingredients}</p>
+            <p>Étapes : {recipeDetails.etapes}</p>
             <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
           </div>
         ) : (
