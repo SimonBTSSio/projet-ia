@@ -31,7 +31,12 @@ const useGetConnectedUser = () => {
             }
         };
 
-        fetchUsers();
+        if (userId) {
+            fetchUsers();
+        } else {
+            setLoading(false);
+            setError('Utilisateur non connecté');
+        }
     }, [myToken, userId]);
 
     return { connectedUser: users, error, loading };
