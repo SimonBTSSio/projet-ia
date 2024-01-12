@@ -129,10 +129,10 @@ export default function Recipe() {
     const fetchComments = async () => {
       if (recipeDetails) {
         try {
-          const response = await fetch(`http://localhost:3001/api/recipes/name/${recipeDetails.titre}`);
+          const response = await fetch(`http://195.35.29.110:3000/api/recipes/name/${recipeDetails.titre}`);
           const data = await response.json();
           if (data.recipe.id) {
-            const commentResponse = await fetch(`http://localhost:3001/api/comments/${data.recipe.id}`);
+            const commentResponse = await fetch(`http://195.35.29.110:3000/api/comments/${data.recipe.id}`);
             const commentData = await commentResponse.json();
 
             setComments(commentData.comments)
