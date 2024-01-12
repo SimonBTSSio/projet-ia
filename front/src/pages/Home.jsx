@@ -20,6 +20,9 @@ const Home = () => {
                                 <Link to="/my-recipes">
                                     <button className="login-button">Mes recettes favorites</button>
                                 </Link>
+                                <Link to="/lists">
+                                    <button className="login-button">Voir vos listes de courses</button>
+                                </Link>
                             </div>
                         ) : (
                             <>
