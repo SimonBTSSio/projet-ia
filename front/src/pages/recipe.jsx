@@ -69,20 +69,15 @@ export default function Recipe() {
       });
       setRecipeId(responseData.recipe.id)
       setIsLiked(true)
-      console.log('je like', likeResponse);
 
     } catch (error) {
       console.error('Error:', error.message);
     }
   }
 
-  console.log('isLiked', isLiked)
-
   const handleUnlike = async (e) => {
     e.preventDefault();
     try {
-      console.log('je unlike', recipeId, userId);
-
       // Vérifiez que recipeId est défini
       if (typeof recipeId === 'undefined') {
         console.error('recipeId est undefined. Veuillez vous assurer qu\'il est correctement défini.');
@@ -98,7 +93,6 @@ export default function Recipe() {
 
       if (response.ok) {
         setIsLiked(false);
-        console.log('Unlike réussi.');
       } else {
         console.error('Erreur lors du "unlike".');
       }
@@ -110,21 +104,20 @@ export default function Recipe() {
 
   useEffect(() => {
     const fetchLike = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/api/users/like/${recipeId}/${userId}`);
-        const data = await response.json();
+      if (recipeId) {
+        try {
+          const response = await fetch(`http://localhost:3001/api/users/like/${recipeId}/${userId}`);
+          const data = await response.json();
 
-        if (data.likedRecipe) {
-          console.log('elle est liké', data.likedRecipe);
-
-          setIsLiked(true)
-        } else {
-          console.log('elle est pas liké');
-          setIsLiked(false)
+          if (data.likedRecipe) {
+            setIsLiked(true)
+          } else {
+            setIsLiked(false)
+          }
         }
-      }
-      catch (error) {
-        console.error("Erreur lors de la récupération de la recette:", error);
+        catch (error) {
+          console.error("Erreur lors de la récupération de la recette:", error);
+        }
       }
     }
     fetchLike();
@@ -133,20 +126,15 @@ export default function Recipe() {
 
   useEffect(() => {
     const fetchComments = async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/api/recipes/name/${encodeURIComponent(recipeDetails.titre)}`);
-        const data = await response.json();
-        if (data.recipe.id) {
-          setRecipeId(data.recipe.id);
-          const commentResponse = await fetch(`http://localhost:3001/api/comments/${data.recipe.id}`);
-            const commentData = await commentResponse.json();
-
-            setComments(commentData.comments)
-        } else {
-          console.log("pas de commentaires");
+      if (recipeDetails) {
+        try {
+          const response = await fetch(`http://localhost:3001/api/comments/${recipeDetails.titre}`);
+          const data = await response.json();
+          setComments(data.comments);
         }
-      } catch (error) {
-        console.error("Erreur lors de la récupération de la recette:", error);
+        catch (error) {
+          console.error("Erreur lors de la récupération de la recette:", error);
+        }
       }
     }
     fetchComments();
@@ -155,30 +143,31 @@ export default function Recipe() {
 
   const tabsData = [
     { label: 'Recettes similaires', content: <SimilarRecipes recipeTitle={recipeDetails?.titre} /> },
-    { label: 'Commentaires', content:<CommentList comments={comments}/>
-    }
+    { label: 'Commentaires', content:<CommentList comments={comments}/>},
+    { label: 'Accompagnements', content: <AccompanimentSuggester recipeTitle={recipeDetails?.titre} /> },
   ];
 
   return (
-    <div className="recipe-details">
-      <Navbar/>
-      {recipeDetails ? (
-          <div>
-            <h2>{recipeDetails.titre}</h2>
-            <p>Difficulté : {recipeDetails.difficulte}</p>
-            <p>Temps : {recipeDetails.temps}</p>
-            <p>Ingrédients : {recipeDetails.ingredients}</p>
-            <p>Étapes : {recipeDetails.etapes}</p>
-            <div>
-              <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
-              <FavoriteRecipe handleLike={isLiked ? handleUnlike : handleLike} isLiked={isLiked}/>
-            </div>
-          </div>
-        ) : (
-          <p>Chargement de la recette...</p>
-        )}
-        {recipeDetails && <TabMenu tabsData={tabsData} />}
-        {recipeDetails && <AccompanimentSuggester recipeTitle={recipeDetails.titre} />}
-    </div>
+      <div>
+        <Navbar/>
+        <div className="recipe-details">
+          {recipeDetails ? (
+              <div>
+                <h2>{recipeDetails.titre}</h2>
+                <p>Difficulté : {recipeDetails.difficulte}</p>
+                <p>Temps : {recipeDetails.temps}</p>
+                <p>Ingrédients : {recipeDetails.ingredients}</p>
+                <p>Étapes : {recipeDetails.etapes}</p>
+                <div>
+                  <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
+                  <FavoriteRecipe handleLike={isLiked ? handleUnlike : handleLike} isLiked={isLiked}/>
+                </div>
+              </div>
+          ) : (
+              <p>Chargement de la recette...</p>
+          )}
+          {recipeDetails && <TabMenu tabsData={tabsData} />}
+        </div>
+      </div>
   );
 }

@@ -8,7 +8,6 @@ const AccompanimentSuggester = ({ recipeTitle }) => {
       const response = await fetch(`http://localhost:3001/accompaniement?recipe=${recipeTitle}`);
       const data = await response.json();
       const recipeData = JSON.parse(data[0].message.content);
-      console.log(recipeData);
       setAccompaniments(recipeData.accompagnements);
     } catch (error) {
       console.error("Erreur lors de la récupération des accompagnements:", error);

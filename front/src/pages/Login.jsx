@@ -33,7 +33,6 @@ const Login = () => {
       }
 
       const userData = await response.json();
-      console.log('User logged in:', userData);
       localStorage.setItem('token', userData.token);
       localStorage.setItem('userId', userData.userId);
       await delay(1000);
@@ -44,37 +43,39 @@ const Login = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Navbar/>
-      <Box mt={5}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Login
-        </Typography>
-        <form onSubmit={handleLogin}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email"
-            name="mail"
-            type="email"
-            value={formData.mail}
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth mt={3}>
-            Login
-          </Button>
-        </form>
-      </Box>
-    </Container>
+      <div>
+        <Navbar/>
+        <Container maxWidth="sm">
+          <Box mt={5}>
+            <Typography variant="h4" align="center" gutterBottom>
+              Login
+            </Typography>
+            <form onSubmit={handleLogin}>
+              <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Email"
+                  name="mail"
+                  type="email"
+                  value={formData.mail}
+                  onChange={handleChange}
+              />
+              <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+              />
+              <Button type="submit" variant="contained" color="primary" fullWidth mt={3}>
+                Login
+              </Button>
+            </form>
+          </Box>
+        </Container>
+      </div>
   );
 };
 

@@ -15,8 +15,6 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  console.log(formData)
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -33,7 +31,6 @@ const Register = () => {
         throw new Error(errorData.error);
       }
 
-      console.log('User registered');
       navigate('/login');
     } catch (error) {
       console.error('Registration error:', error.message);
@@ -41,45 +38,47 @@ const Register = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Navbar/>
-      <Box mt={5}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Register
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Username"
-            name="login"
-            value={formData.login}
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Email"
-            name="mail"
-            type="email"
-            value={formData.mail}
-            onChange={handleChange}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <Button type="submit" variant="contained" color="primary" fullWidth mt={3}>
-            Register
-          </Button>
-        </form>
-      </Box>
-    </Container>
+      <div>
+        <Navbar/>
+        <Container maxWidth="sm">
+          <Box mt={5}>
+            <Typography variant="h4" align="center" gutterBottom>
+              Register
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Username"
+                  name="login"
+                  value={formData.login}
+                  onChange={handleChange}
+              />
+              <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Email"
+                  name="mail"
+                  type="email"
+                  value={formData.mail}
+                  onChange={handleChange}
+              />
+              <TextField
+                  fullWidth
+                  margin="normal"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+              />
+              <Button type="submit" variant="contained" color="primary" fullWidth mt={3}>
+                Register
+              </Button>
+            </form>
+          </Box>
+        </Container>
+      </div>
   );
 };
 

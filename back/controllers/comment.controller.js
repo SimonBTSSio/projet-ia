@@ -33,7 +33,6 @@ const createComment = async (req, res) => {
 
 const getRecipeComments = async (req, res) => {
   try {
-    console.log(req.params);
     const { recette_id } = req.params;
 
     const recipeComments = await Comment.findAll({ where: { recette_id } });

@@ -174,8 +174,6 @@ const unlikeRecipe = async (req, res) => {
 
     const recipeUser = await RecipeUser.findOne({ where: { recette_id, author } });
 
-      console.log(recipeUser)
-
     if (!recipeUser) {
       return res.status(404).json({ message: 'Vous n\'avez pas liké cette recette.' });
     }

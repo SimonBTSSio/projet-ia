@@ -22,33 +22,35 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="search">
-        <Navbar/>
-        <form onSubmit={handleSearch}>
-            <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher des recettes..."
-                disabled={isLoading}
-            />
-            <button type="submit" disabled={isLoading}>Rechercher</button>
-        </form>
+      <div>
+          <Navbar/>
+          <div className="search">
+              <form onSubmit={handleSearch}>
+                  <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Rechercher des recettes..."
+                      disabled={isLoading}
+                  />
+                  <button type="submit" disabled={isLoading}>Rechercher</button>
+              </form>
 
-        <div className="recipe-container">
-          {recipes.map((recipe, index) => {
-              const recipeUrl = `/recipe?titre=${encodeURIComponent(recipe.titre)}&difficulte=${encodeURIComponent(recipe.difficulte)}&temps=${encodeURIComponent(recipe.temps)}`;
-              
-              return (
-                <a href={recipeUrl} className="recipe-box" key={index}>
-                  <h3>{recipe.titre}</h3>
-                  <p>Difficulté : {recipe.difficulte}</p>
-                  <p>Temps : {recipe.temps}</p>
-                  <p>{recipe.description}</p>
-                </a>
-              );
-            })}
-        </div>
-    </div>
+              <div className="recipe-container">
+                  {recipes.map((recipe, index) => {
+                      const recipeUrl = `/recipe?titre=${encodeURIComponent(recipe.titre)}&difficulte=${encodeURIComponent(recipe.difficulte)}&temps=${encodeURIComponent(recipe.temps)}`;
+
+                      return (
+                          <a href={recipeUrl} className="recipe-box" key={index}>
+                              <h3>{recipe.titre}</h3>
+                              <p>Difficulté : {recipe.difficulte}</p>
+                              <p>Temps : {recipe.temps}</p>
+                              <p>{recipe.description}</p>
+                          </a>
+                      );
+                  })}
+              </div>
+          </div>
+      </div>
   );
 }

@@ -11,7 +11,7 @@ router.post('/register', UserController.registerUser);
 router.post('/login', UserController.loginUser);
 router.post('/logout', UserController.logoutUser);
 router.post('/like', UserController.likeRecipe);
-router.get('/like/:id', UserController.getLikedRecipes);
+router.get('/like/:author', UserController.getLikedRecipes);
 router.delete('/unlike/:recette_id/:author', UserController.unlikeRecipe);
 router.get('/like/:recette_id/:author', UserController.getLikedRecipe);
 
