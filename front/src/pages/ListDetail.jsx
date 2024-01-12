@@ -71,7 +71,7 @@ export default function ListDetail() {
         <EmailShareButton url={shareUrl} subject="Ma liste de courses" body={shareMessage}>
           <button>Partager par Email</button>
         </EmailShareButton>
-        <button onClick={() => handleCopyToClipboard(shareMessage)}>Copier le lien</button>
+        <button onClick={() => handleCopyToClipboard(shareMessage)}>Copier la liste de courses</button>
       </div>
     </div>
   );
