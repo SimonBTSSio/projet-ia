@@ -148,6 +148,16 @@ export default function Recipe() {
     { label: 'Accompagnements', content: <AccompanimentSuggester recipeTitle={recipeDetails?.titre} /> },
   ];
 
+  const fetchCaloricIndex = async () => {
+    try {
+      const response = await fetch(`http://195.35.29.110:3000/get-caloric-index?recipe=${encodeURIComponent(recipeDetails.titre)}&ingredients=${recipeDetails.ingredients}`);
+      const data = await response.json();
+      alert(`Indice calorique pour ${recipeDetails.titre}: ${data.message}`);
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'indice calorique:", error);
+    }
+  };
+
   return (
       <div>
         <Navbar/>
@@ -160,6 +170,7 @@ export default function Recipe() {
                 <p>Ingrédients : {recipeDetails.ingredients}</p>
                 <p>Étapes : {recipeDetails.etapes}</p>
                 <AddIngredientsToShoppingListButton ingredients={recipeDetails.ingredients} />
+                <button onClick={fetchCaloricIndex}>Voir l'indice calorique</button>
                 <div>
                   <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
                   <FavoriteRecipe handleLike={isLiked ? handleUnlike : handleLike} isLiked={isLiked}/>

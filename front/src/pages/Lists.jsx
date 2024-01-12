@@ -8,7 +8,13 @@ export default function Lists() {
   useEffect(() => {
     const fetchTodoLists = async () => {
       try {
-        const response = await fetch('http://195.35.29.110:3000/api/todoLists');
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+          console.log("Aucun utilisateur connecté.");
+          return;
+        }
+
+        const response = await fetch(`http://195.35.29.110:3000/api/todoLists/user/${userId}`);
         const data = await response.json();
         setTodoLists(data);
       } catch (error) {
