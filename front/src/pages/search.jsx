@@ -14,9 +14,6 @@ export default function SearchPage() {
       const response = await fetch(`http://195.35.29.110:3000/search-recipe?question=${encodeURIComponent(query)}`);
       const data = await response.json();
       const recipesData = Object.values(data);
-      //console.log(recipesData);
-      //console.log(typeof recipesData);
-      //setRecipes(recipesData[0]);
 
       setRecipes(recipesData);
     } catch (error) {

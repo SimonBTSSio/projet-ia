@@ -63,10 +63,24 @@ async function deleteTodoList(req, res) {
   }
 }
 
+async function getTodoListsByUser(req, res) {
+  try {
+    const { userId } = req.params;
+    const todoLists = await TodoList.findAll({
+      where: { userId: userId }
+    });
+
+    res.status(200).json(todoLists);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+}
+
 module.exports = {
   createTodoList,
   getAllTodoLists,
   getTodoListById,
   updateTodoList,
   deleteTodoList,
+  getTodoListsByUser,
 };

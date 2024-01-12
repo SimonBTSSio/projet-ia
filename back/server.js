@@ -64,6 +64,27 @@ app.get('/get-similar-recipe', async (req, res) => {
   }
 });
 
+app.get('/get-caloric-index', async (req, res) => {
+  try {
+    const { recipe, ingredients } = req.query;
+    const completion = await openai.chat.completions.create({
+      messages: [{ 
+        role: "user", 
+        content: `Calcule l'indice calorique pour la recette "${recipe}" avec les ingrédients suivants : ${ingredients}` 
+      }],
+      model: "gpt-3.5-turbo",
+    });
+
+    const caloricIndex = completion.choices[0].message.content;
+    res.send({ message: caloricIndex });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error });
+  }
+});
+
+
+
 app.get('/search-recipe', async (req, res) => {
   try {
     const completion = await openai.chat.completions.create({

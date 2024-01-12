@@ -78,7 +78,22 @@ export default function ListDetail() {
 }
 
 function handleCopyToClipboard(text) {
-  navigator.clipboard.writeText(text)
-    .then(() => alert('Message copié dans le presse-papier!'))
-    .catch(err => console.error('Erreur lors de la copie: ', err));
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert('Message copié dans le presse-papier!'))
+      .catch(err => console.error('Erreur lors de la copie: ', err));
+  } else {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      alert('Message copié dans le presse-papier!');
+    } catch (err) {
+      console.error('Erreur lors de la copie: ', err);
+    }
+    document.body.removeChild(textArea);
+  }
 }

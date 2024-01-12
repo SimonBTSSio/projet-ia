@@ -9,6 +9,7 @@ router.get('/', TodoListController.getAllTodoLists);
 router.get('/:id', TodoListController.getTodoListById);
 router.put('/:id', TodoListController.updateTodoList);
 router.delete('/:id', TodoListController.deleteTodoList);
+router.get('/user/:userId', TodoListController.getTodoListsByUser);
 router.post('/create', async (req, res) => {
     try {
       const { userId, ingredientList } = req.body;
