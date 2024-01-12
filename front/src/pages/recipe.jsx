@@ -41,7 +41,7 @@ export default function Recipe() {
   const handleLike = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/api/recipes', {
+      const response = await fetch('http://195.35.29.110:3000/api/recipes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export default function Recipe() {
 
       const responseData = await response.json();
 
-      const likeResponse = await fetch('http://localhost:3001/api/users/like', {
+      const likeResponse = await fetch('http://195.35.29.110:3000/api/users/like', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function Recipe() {
         return;
       }
 
-      const response = await fetch(`http://localhost:3001/api/users/unlike/${recipeId}/${userId}`, {
+      const response = await fetch(`http://195.35.29.110:3000/api/users/unlike/${recipeId}/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ export default function Recipe() {
     const fetchLike = async () => {
       if (recipeId) {
         try {
-          const response = await fetch(`http://localhost:3001/api/users/like/${recipeId}/${userId}`);
+          const response = await fetch(`http://195.35.29.110:3000/api/users/like/${recipeId}/${userId}`);
           const data = await response.json();
 
           if (data.likedRecipe) {
@@ -129,7 +129,7 @@ export default function Recipe() {
     const fetchComments = async () => {
       if (recipeDetails) {
         try {
-          const response = await fetch(`http://localhost:3001/api/comments/${recipeDetails.titre}`);
+          const response = await fetch(`http://195.35.29.110:3000/api/comments/${recipeDetails.titre}`);
           const data = await response.json();
           setComments(data.comments);
         }

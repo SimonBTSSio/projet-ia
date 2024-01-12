@@ -25,7 +25,7 @@ export default function Chatbot() {
         try {
             const conversation = messages.map(m => `${m.role === 'user' ? 'Utilisateur:' : 'Chef étoilé:'} ${m.content}`).join(' / ');
             const questionTotale = promptInitial + conversation + ` / Utilisateur: ${newUserMessage.content}`;
-            const response = await fetch(`http://localhost:3001/chat-bot?question=${encodeURIComponent(questionTotale)}`);
+            const response = await fetch(`http://195.35.29.110:3000/chat-bot?question=${encodeURIComponent(questionTotale)}`);
             const data = await response.json();
 
             if (data && data.length > 0) {

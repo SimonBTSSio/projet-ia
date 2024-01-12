@@ -11,7 +11,7 @@ export default function SearchPage() {
     event.preventDefault();
     setIsLoading(true); 
     try {
-      const response = await fetch(`http://localhost:3001/search-recipe?question=${encodeURIComponent(query)}`);
+      const response = await fetch(`http://195.35.29.110:3000/search-recipe?question=${encodeURIComponent(query)}`);
       const data = await response.json();
       const recipesData = Object.values(data);
       //console.log(recipesData);

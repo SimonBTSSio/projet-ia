@@ -6,7 +6,7 @@ function SimilarRecipes({ recipeTitle }) {
   useEffect(() => {
     const fetchSimilarRecipes = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/get-similar-recipe?recipe=${encodeURIComponent(recipeTitle)}`);
+        const response = await fetch(`http://195.35.29.110:3000/get-similar-recipe?recipe=${encodeURIComponent(recipeTitle)}`);
         const data = await response.json();
         if (data && data.length > 0) {
           const recipes = JSON.parse(data[0].message.content).recettes; 

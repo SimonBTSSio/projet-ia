@@ -10,7 +10,7 @@ const MyRecipes = () => {
     useEffect(() => {
         const fetchLikedRecipes = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/users/like/${userId}`, {
+                const response = await fetch(`http://195.35.29.110:3000/api/users/like/${userId}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -28,7 +28,7 @@ const MyRecipes = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/recipes`);
+                const response = await fetch(`http://195.35.29.110:3000/api/recipes`);
                 const data = await response.json();
 
                 const recipesData = data.recipes.filter((recipe) => idRecipes.includes(recipe.id));

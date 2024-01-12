@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.use('/api/users', userRoutes);
 app.use('/api/comments', commentRoutes);
