@@ -119,3 +119,8 @@
   background-color: #007bff; /* Couleur du bouton Modifier */
   color: white; /* Couleur du texte */
 }
+.flex{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
