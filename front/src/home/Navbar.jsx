@@ -26,9 +26,11 @@ const Navbar = () => {
         <AppBar position="static" sx={{ backgroundColor: 'white', color: 'black' }}>
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    <img src={logo} alt="La Gova" style={{ height: '50px' }} />
+                    <Link to='/'>
+                        <img src={logo} alt="La Gova" style={{height: '50px'}}/>
+                    </Link>
                 </Typography>
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: '1em' }}>
+                <Box sx={{display: { xs: 'none', md: 'flex' }, gap: '1em' }}>
                     <ul style={{ listStyleType: 'none', display: 'flex', gap: '1em' }}>
                         {
                             !myToken ? (

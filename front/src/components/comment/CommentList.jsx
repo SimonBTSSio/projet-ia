@@ -17,8 +17,6 @@ const CommentList = ({ comments }) => {
                 },
             });
             if (response.ok) {
-                console.log('Commentaire supprimé');
-                // Mettre à jour commentList après la suppression
                 setCommentList(commentList.filter(comment => comment.id !== id));
             }
         } catch (error) {
