@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../style.css';
+import Navbar from "../home/Navbar.jsx";
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
@@ -10,7 +11,7 @@ export default function SearchPage() {
     event.preventDefault();
     setIsLoading(true); 
     try {
-      const response = await fetch(`http://195.35.29.110:3000/search-recipe?question=${encodeURIComponent(query)}`);
+      const response = await fetch(`http://localhost:3001/search-recipe?question=${encodeURIComponent(query)}`);
       const data = await response.json();
       const recipesData = Object.values(data);
       setRecipes(recipesData[0]);
@@ -22,6 +23,7 @@ export default function SearchPage() {
 
   return (
     <div className="search">
+        <Navbar/>
         <form onSubmit={handleSearch}>
             <input
                 type="text"

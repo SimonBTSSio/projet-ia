@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Navbar from "../home/Navbar.jsx";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://195.35.29.110:3000/api/users/register', {
+      const response = await fetch('http://localhost:3001/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,6 +42,7 @@ const Register = () => {
 
   return (
     <Container maxWidth="sm">
+      <Navbar/>
       <Box mt={5}>
         <Typography variant="h4" align="center" gutterBottom>
           Register

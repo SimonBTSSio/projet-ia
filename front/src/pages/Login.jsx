@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import Navbar from "../home/Navbar.jsx";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://195.35.29.110:3000/api/users/login', {
+      const response = await fetch('http://localhost:3001/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,6 +45,7 @@ const Login = () => {
 
   return (
     <Container maxWidth="sm">
+      <Navbar/>
       <Box mt={5}>
         <Typography variant="h4" align="center" gutterBottom>
           Login

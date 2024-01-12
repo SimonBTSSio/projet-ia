@@ -168,6 +168,57 @@ const likeRecipe = async (req, res) => {
   }
 };
 
+const unlikeRecipe = async (req, res) => {
+  try {
+    const { recette_id, author } = req.params;
+
+    const recipeUser = await RecipeUser.findOne({ where: { recette_id, author } });
+
+      console.log(recipeUser)
+
+    if (!recipeUser) {
+      return res.status(404).json({ message: 'Vous n\'avez pas liké cette recette.' });
+    }
+
+    await recipeUser.destroy();
+    res.status(200).json({ message: 'Recette unlikée avec succès.' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getLikedRecipes = async (req, res) => {
+    try {
+        const { author } = req.params;
+
+        const likedRecipes = await RecipeUser.findAll({ where: { author } });
+
+        if (!likedRecipes) {
+        return res.status(404).json({ message: 'Aucune recette likée trouvée pour cet utilisateur.' });
+        }
+
+        res.status(200).json({ likedRecipes });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const getLikedRecipe = async (req, res) => {
+    try {
+        const { recette_id, author } = req.params;
+
+        const likedRecipe = await RecipeUser.findOne({ where: { recette_id, author } });
+
+        if (!likedRecipe) {
+        return res.status(404).json({ message: 'Aucune recette likée trouvée pour cet utilisateur.' });
+        }
+
+        res.status(200).json({ likedRecipe });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
   createUser,
   getAllUsers,
@@ -177,5 +228,8 @@ module.exports = {
   registerUser,
   loginUser,
   logoutUser,
-  likeRecipe
+  likeRecipe,
+  getLikedRecipes,
+  getLikedRecipe,
+  unlikeRecipe,
 };
