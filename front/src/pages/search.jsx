@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import '../style.css';
 import Navbar from "../home/Navbar.jsx";
+import 'regenerator-runtime';
+import SpeechRecognition , { useSpeechRecognition } from 'react-speech-recognition';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+    const { transcript, resetTranscript, browserSupportsSpeechRecognition, finalTranscript} = useSpeechRecognition();
+    const [isListening, setIsListening] = useState(false);
 
-  const handleSearch = async (event) => {
+    const handleSearch = async (event) => {
     event.preventDefault();
-    setIsLoading(true); 
+    setIsLoading(true);
     try {
       const response = await fetch(`http://195.35.29.110:3000/search-recipe?question=${encodeURIComponent(query)}`);
       const data = await response.json();
@@ -21,6 +26,26 @@ export default function SearchPage() {
     }
     setIsLoading(false);
   };
+
+    useEffect(() => {
+        setQuery(transcript);
+
+        if (finalTranscript !== '') {
+            setIsListening(false);
+            handleSearch({ preventDefault: () => {} });
+        }
+
+    }, [transcript, finalTranscript, handleSearch]);
+
+    if (!browserSupportsSpeechRecognition) {
+        return null
+    }
+
+    const handleVoice = () => {
+        setIsListening(true);
+        SpeechRecognition.startListening({ language: 'fr-FR' });
+        resetTranscript();
+    }
 
   return (
       <div>
@@ -34,6 +59,7 @@ export default function SearchPage() {
                       placeholder="Rechercher des recettes..."
                       disabled={isLoading}
                   />
+                  <KeyboardVoiceIcon onClick={handleVoice} color={isListening ? 'primary' : 'disabled'} />
                   <button type="submit" disabled={isLoading}>Rechercher</button>
               </form>
 
