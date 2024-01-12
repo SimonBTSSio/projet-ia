@@ -14,7 +14,11 @@ export default function SearchPage() {
       const response = await fetch(`http://localhost:3001/search-recipe?question=${encodeURIComponent(query)}`);
       const data = await response.json();
       const recipesData = Object.values(data);
-      setRecipes(recipesData[0]);
+      //console.log(recipesData);
+      //console.log(typeof recipesData);
+      //setRecipes(recipesData[0]);
+
+      setRecipes(recipesData);
     } catch (error) {
       console.error("Erreur lors de la récupération des recettes:", error);
     }

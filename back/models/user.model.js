@@ -35,4 +35,11 @@ const User = sequelize.define('User', {
   tableName: 'User',
 });
 
+User.associate = function(models) {
+  User.hasMany(models.TodoList, {
+    foreignKey: 'userId',
+    as: 'todoLists',
+  });
+};
+
 module.exports = User;

@@ -19,7 +19,7 @@ const RecipeEvaluation = ({recette = null, children}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3001/api/recipes', {
+            const response = await fetch('http://195.35.29.110:3000/api/recipes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const RecipeEvaluation = ({recette = null, children}) => {
 
             const responseData = await response.json();
 
-            const responseComment = await fetch('http://localhost:3001/api/comments', {
+            const responseComment = await fetch('http://195.35.29.110:3000/api/comments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

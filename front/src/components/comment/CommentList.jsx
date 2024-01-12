@@ -10,7 +10,7 @@ const CommentList = ({ comments }) => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:3001/api/comments/${id}`, {
+            const response = await fetch(`http://195.35.29.110:3000/api/comments/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -151,6 +151,10 @@ input[type="number"] {
 .error{
     color: red;
 }
+.btn-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
 
 .liked {
     background-color: red;

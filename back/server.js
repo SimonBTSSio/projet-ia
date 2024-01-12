@@ -6,6 +6,11 @@ const userRoutes = require('./routes/user.routes');
 const commentRoutes = require('./routes/comment.routes');
 const recipeRoutes = require('./routes/recipe.routes');
 const bodyParser = require("body-parser");
+/** TODO */
+const todoItemRoutes = require('./routes/todoItem.routes');
+const todoListRoutes = require('./routes/todoList.routes');
+const Recipe = require('./models/recipe.model');
+const { Op } = require('sequelize');
 
 dotenv.config();
 
@@ -19,6 +24,9 @@ const port = process.env.PORT || 3001;
 app.use('/api/users', userRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/recipes', recipeRoutes);
+/** todo */
+app.use('/api/todoItems', todoItemRoutes);
+app.use('/api/todoLists', todoListRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
@@ -64,9 +72,14 @@ app.get('/search-recipe', async (req, res) => {
     });
 
     const aiRecipes = JSON.parse(completion.choices[0].message.content);
-    /*const finalRecipes = [];
 
-    for (const aiRecipe of aiRecipes) {
+    if (!aiRecipes || !aiRecipes.recettes) {
+      throw new Error("Invalid AI response format");
+    }
+
+    const finalRecipes = [];
+
+    for (const aiRecipe of aiRecipes.recettes) {
       const existingRecipe = await Recipe.findOne({ where: { name: aiRecipe.titre } });
 
       if (existingRecipe) {
@@ -74,15 +87,33 @@ app.get('/search-recipe', async (req, res) => {
           titre: existingRecipe.name,
           difficulte: existingRecipe.difficulty,
           temps: existingRecipe.duration,
-          description: `Ingrédients : ${JSON.stringify(existingRecipe.ingredients)}, Instructions : ${JSON.stringify(existingRecipe.instructions)}`
+          description: `Une des meilleurs recette au monde`
         });
       } else {
         finalRecipes.push(aiRecipe);
       }
-    }*/
+    }
 
-    res.send(aiRecipes);
+    const existingRecipes = await Recipe.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${req.query.question}%`
+        }
+      }
+    });
+
+    existingRecipes.forEach(existingRecipe => {
+      finalRecipes.push({
+        titre: existingRecipe.name,
+        difficulte: existingRecipe.difficulty,
+        temps: existingRecipe.duration,
+        description: `Une des meilleurs recette au monde`
+      });
+    });
+
+    res.send(finalRecipes);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: error });
   }
 });

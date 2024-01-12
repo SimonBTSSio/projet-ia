@@ -6,6 +6,7 @@ import '../style.css';
 import RecipeEvaluation from "../components/comment/RecipeEvaluation.jsx";
 import CommentList from "../components/comment/CommentList.jsx";
 import TabMenu from "../components/recipe/TabMenu.jsx";
+import AddIngredientsToShoppingListButton from '../components/AddIngredientsToShoppingListButton';
 import FavoriteRecipe from "../components/recipe/FavoriteRecipe.jsx";
 import Navbar from "../home/Navbar.jsx";
 
@@ -158,6 +159,7 @@ export default function Recipe() {
                 <p>Temps : {recipeDetails.temps}</p>
                 <p>Ingrédients : {recipeDetails.ingredients}</p>
                 <p>Étapes : {recipeDetails.etapes}</p>
+                <AddIngredientsToShoppingListButton ingredients={recipeDetails.ingredients} />
                 <div>
                   <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
                   <FavoriteRecipe handleLike={isLiked ? handleUnlike : handleLike} isLiked={isLiked}/>
