@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SimilarRecipes from '../components/SimilarRecipes';
 import AccompanimentSuggester from '../components/AccompanimentSuggester';
@@ -57,7 +57,7 @@ export default function Recipe() {
 
       const responseData = await response.json();
 
-      const likeResponse = await fetch('http://195.35.29.110:3000/api/users/like', {
+      await fetch('http://195.35.29.110:3000/api/users/like', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,11 +129,17 @@ export default function Recipe() {
     const fetchComments = async () => {
       if (recipeDetails) {
         try {
-          const response = await fetch(`http://195.35.29.110:3000/api/comments/${recipeDetails.titre}`);
+          const response = await fetch(`http://localhost:3001/api/recipes/name/${recipeDetails.titre}`);
           const data = await response.json();
-          setComments(data.comments);
-        }
-        catch (error) {
+          if (data.recipe.id) {
+            const commentResponse = await fetch(`http://localhost:3001/api/comments/${data.recipe.id}`);
+            const commentData = await commentResponse.json();
+
+            setComments(commentData.comments)
+          } else {
+            console.log("pas de commentaires");
+          }
+        } catch (error) {
           console.error("Erreur lors de la récupération de la recette:", error);
         }
       }
@@ -169,12 +175,14 @@ export default function Recipe() {
                 <p>Temps : {recipeDetails.temps}</p>
                 <p>Ingrédients : {recipeDetails.ingredients}</p>
                 <p>Étapes : {recipeDetails.etapes}</p>
-                <AddIngredientsToShoppingListButton ingredients={recipeDetails.ingredients} />
-                <button onClick={fetchCaloricIndex}>Voir l'indice calorique</button>
-                <div>
+                <div className="flex">
+                  <AddIngredientsToShoppingListButton ingredients={recipeDetails.ingredients} />
+                    
+                  <button onClick={fetchCaloricIndex}>Voir l'indice calorique</button>
+
                   <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
-                  <FavoriteRecipe handleLike={isLiked ? handleUnlike : handleLike} isLiked={isLiked}/>
                 </div>
+                <FavoriteRecipe handleLike={isLiked ? handleUnlike : handleLike} isLiked={isLiked}/>
               </div>
           ) : (
               <p>Chargement de la recette...</p>
