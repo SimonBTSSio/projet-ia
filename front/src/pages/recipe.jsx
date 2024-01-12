@@ -6,6 +6,7 @@ import '../style.css';
 import RecipeEvaluation from "../components/comment/RecipeEvaluation.jsx";
 import CommentList from "../components/comment/CommentList.jsx";
 import TabMenu from "../components/recipe/TabMenu.jsx";
+import AddIngredientsToShoppingListButton from '../components/AddIngredientsToShoppingListButton';
 
 export default function Recipe() {
   const [recipeDetails, setRecipeDetails] = useState(null);
@@ -71,7 +72,10 @@ export default function Recipe() {
             <p>Temps : {recipeDetails.temps}</p>
             <p>Ingrédients : {recipeDetails.ingredients}</p>
             <p>Étapes : {recipeDetails.etapes}</p>
-            <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
+            <div class="btn-container">
+              <AddIngredientsToShoppingListButton ingredients={recipeDetails.ingredients} />
+              <RecipeEvaluation recette={recipeDetails}>Evaluer cette recette</RecipeEvaluation>
+            </div>
           </div>
         ) : (
           <p>Chargement de la recette...</p>

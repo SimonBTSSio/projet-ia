@@ -1,0 +1,28 @@
+.todo-lists, .todo-list-detail {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.todo-lists h1, .todo-list-detail h2 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+  
